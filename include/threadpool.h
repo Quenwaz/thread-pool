@@ -11,6 +11,10 @@
 
 #ifndef __h_threadpoll_included__
 #define __h_threadpoll_included__
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 
 /**
  * @brief 任务函数指针定义
@@ -22,8 +26,9 @@ typedef int(*FnTask)(void*);
  * @brief 初始化线程池大小
  * 
  * @param size 线程池大小， 建议2^n大小
+ * @return void* 返回线程池对象
  */
-void init_threadpool(unsigned int size);
+void* threadpool_init(unsigned int size);
 
 /**
  * @brief 添加任务线程池的任务队列中
@@ -31,6 +36,18 @@ void init_threadpool(unsigned int size);
  * @param task 任务函数地址
  * @param pData 附加数据
  */
-void push_task(FnTask task, void* pData);
+void threadpool_push_task(void* threadpool, FnTask task, void* pData);
 
+/**
+ * @brief 释放线程池， 关闭所有线程
+ * 
+ * @param threadpool 线程池对象
+ */
+void threadpool_free(void* threadpool);
+
+
+
+#ifdef __cplusplus
+}
+#endif
 #endif // __h_threadpoll_included__

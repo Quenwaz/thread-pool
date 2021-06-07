@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "qqueue.h": "c",
+        "pthread.h": "c",
+        "stdlib.h": "c",
+        "stdint.h": "c",
+        "cstdint": "c",
+        "stdint-gcc.h": "c"
+    }
+}

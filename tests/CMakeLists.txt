@@ -5,6 +5,7 @@ function(threadpool_test test_name)
 
     add_executable(${TEST_EXECUTABLE} ${TEST_SOURCE})
     target_include_directories(${TEST_EXECUTABLE} PRIVATE ${PROJECT_SOURCE_DIR}/include)
+    target_compile_definitions(${TEST_EXECUTABLE} PRIVATE _GLIBCXX_USE_CXX11_ABI=0)
     # CMake 3.20 and upstream GTest define GTest::gtest, older versions define GTest::GTest
     if (TARGET GTest::gtest)
         target_link_libraries(${TEST_EXECUTABLE} GTest::gtest GTest::gtest_main ${PROJECT_NAME}_static)
