@@ -79,13 +79,13 @@ static void* threadfunc(void * pData)
         }
         pthread_mutex_unlock(&threadpool->mtx_);
 
-        // 任务队列为空且停止所有线程， 则退出当前线程
-        if ( task.fnTask_ == NULL)
-            break;
-    
         // 通知threadpool_free, 任务出队了
         pthread_cond_signal(&threadpool->cond_);
 
+        // 任务队列为空且停止所有线程， 则退出当前线程
+        if ( task.fnTask_ == NULL)
+            break;
+             
         // 执行任务
         task.fnTask_(task.pData);
     }
@@ -142,14 +142,15 @@ void threadpool_free(void* threadpool_, bool wait)
 
     struct ThreadPool* threadpool = (struct ThreadPool*)threadpool_;
     pthread_mutex_lock(&threadpool->mtx_);
+
+    // 告知所有线程，该退出了。 但是无法终止正工作中的线程， 强行终止可能导致内存泄漏
+    threadpool->stopall_ = 1;
+
     // 等待所有任务出队之后， 再将stopall标志位置1
     while (0 == queue_empty(threadpool->taskqueue_))
     {
         pthread_cond_wait(&threadpool->cond_, &threadpool->mtx_);
     }
-
-    // 告知所有线程，该退出了。 但是无法终止正工作中的线程， 强行终止可能导致内存泄漏
-    threadpool->stopall_ = 1;
     pthread_mutex_unlock(&threadpool->mtx_);
 
     // 广告所有等待线程， 无需再等待工作
