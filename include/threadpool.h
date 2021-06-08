@@ -11,6 +11,7 @@
 
 #ifndef __h_threadpoll_included__
 #define __h_threadpoll_included__
+#include <stdbool.h>
 #ifdef __cplusplus
 extern "C"{
 #endif
@@ -20,7 +21,7 @@ extern "C"{
  * @brief 任务函数指针定义
  * 
  */
-typedef int(*FnTask)(void*);
+typedef void(*FnTask)(void*);
 
 /**
  * @brief 初始化线程池大小
@@ -42,8 +43,9 @@ void threadpool_push_task(void* threadpool, FnTask task, void* pData);
  * @brief 释放线程池， 关闭所有线程
  * 
  * @param threadpool 线程池对象
+ * @param wait 非0则等待所有工作线程退出(join)， 0则不等待(detach)
  */
-void threadpool_free(void* threadpool);
+void threadpool_free(void* threadpool, bool wait);
 
 
 

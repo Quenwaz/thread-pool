@@ -20,7 +20,6 @@ struct QueueNode * queue_push(struct Queue * queue,  QueueValueType val)
     node->next = NULL;
     if ( queue->front == NULL){
         queue->front = node;
-        queue->front->next = node;
     }else{
         queue->rear->next = node;
     }
@@ -81,3 +80,4 @@ unsigned int queue_size(struct Queue * queue)
 
     return length;
 }
+

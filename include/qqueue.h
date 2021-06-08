@@ -4,7 +4,7 @@
  * @brief 队列实现
  * @version 0.1
  * @date 2021-06-06
- * 
+ * 修改 QueueValueType 需重新编译源文件
  * @copyright Copyright (c) 2021 Quenwaz
  * 
  */
@@ -18,14 +18,24 @@ extern "C"{
 
 // typedef int QueueValueType;
 #ifndef QueueValueType
-#define QueueValueType int 
+// #pragma message("Please define the value type of the queue.")
+// #error "Please define the value type of the queue."
+#define QueueValueType void*
 #endif // QueueValueType
 
+/**
+ * @brief 队列链表节点
+ * 
+ */
 struct QueueNode{
     QueueValueType value;
     struct QueueNode* next;
 };
 
+/**
+ * @brief 队列对象
+ * 
+ */
 struct Queue{
     struct QueueNode* front;
     struct QueueNode* rear;

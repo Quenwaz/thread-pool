@@ -5,6 +5,13 @@
         "stdlib.h": "c",
         "stdint.h": "c",
         "cstdint": "c",
-        "stdint-gcc.h": "c"
+        "stdint-gcc.h": "c",
+        "array": "c",
+        "deque": "c",
+        "vector": "c",
+        "string_view": "c",
+        "stdio.h": "c",
+        "*.tcc": "c",
+        "syscall.h": "c"
     }
 }

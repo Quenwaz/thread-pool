@@ -8,7 +8,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 project(threadpool LANGUAGES C CXX)
 
-
+message(STATUS "CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 
 option(THREADPOOL_BUILD_TESTS "whether to compile the test set." ON)
 

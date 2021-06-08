@@ -1,33 +1,43 @@
 #include "gtest/gtest.h"
 #include "threadpool.h"
 
-int task1(void* data)
+void task1(void* data)
 {
-    printf(__FUNCTION__);
-    return 0;
+    int *p = (int*)(data);
+    sleep(*p);
+    fprintf(stderr, "do %s...already sleep %d second.\n",__FUNCTION__, *p);
+    *p = 1;
 }
 
-int task2(void* data)
+void task2(void* data)
 {
-    printf(__FUNCTION__);
-    return 0;
+    int *p = (int*)(data);
+    sleep(*p);
+    fprintf(stderr, "do %s...already sleep %d second.\n",__FUNCTION__, *p);
+    *p = 1;
 }
 
-int task3(void* data)
+void task3(void* data)
 {
-    printf(__FUNCTION__);
-    return 0;
+    int *p = (int*)(data);
+    sleep(*p);
+    fprintf(stderr, "do %s...already sleep %d second.\n",__FUNCTION__, *p);
+    *p = 1;
 }
 
 TEST(threadpool_test, test1)
 {
-
     void* threadpool = threadpool_init(4);
+    int sleep_second_3 = 3;
+    threadpool_push_task(threadpool,task1, &sleep_second_3);
+    int sleep_second_1 = 1;
+    threadpool_push_task(threadpool,task2, &sleep_second_1);
+    int sleep_second_2 = 2;
+    threadpool_push_task(threadpool,task3, &sleep_second_2);
 
-    threadpool_push_task(threadpool,task1, NULL);
-    threadpool_push_task(threadpool,task2, NULL);
-    threadpool_push_task(threadpool,task3, NULL);
-
-    threadpool_free(threadpool);
-    ASSERT_EQ(1, 1);
+    // 必须等待所有线程结束， 否则无法正常验证
+    threadpool_free(threadpool, true);
+    EXPECT_EQ(sleep_second_1, 1);
+    EXPECT_EQ(sleep_second_2, 1);
+    EXPECT_EQ(sleep_second_3, 1);
 }
