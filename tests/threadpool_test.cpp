@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "threadpool.h"
+#include "threadpool.hpp"
 
 void task1(void* data)
 {
@@ -25,7 +26,8 @@ void task3(void* data)
     *p = 1;
 }
 
-TEST(threadpool_test, test1)
+
+TEST(threadpool_test, test_c)
 {
     void* threadpool = threadpool_init(4);
     int sleep_second_3 = 3;
@@ -37,6 +39,23 @@ TEST(threadpool_test, test1)
 
     // 必须等待所有线程结束， 否则无法正常验证
     threadpool_free(threadpool, true);
+    EXPECT_EQ(sleep_second_1, 1);
+    EXPECT_EQ(sleep_second_2, 1);
+    EXPECT_EQ(sleep_second_3, 1);
+}
+
+TEST(threadpool_test, test_cpp)
+{
+    threadpool::ThreadPool threadpool(4);
+    int sleep_second_3 = 3;
+    threadpool.PushTask(task1, &sleep_second_3);
+    int sleep_second_1 = 1;
+    threadpool.PushTask(task2, &sleep_second_1);
+    int sleep_second_2 = 2;
+    threadpool.PushTask(task3, &sleep_second_2);
+
+    // 必须等待所有线程结束， 否则无法正常验证
+    threadpool.StopAll(true);
     EXPECT_EQ(sleep_second_1, 1);
     EXPECT_EQ(sleep_second_2, 1);
     EXPECT_EQ(sleep_second_3, 1);

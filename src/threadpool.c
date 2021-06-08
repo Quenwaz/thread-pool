@@ -80,7 +80,7 @@ static void* threadfunc(void * pData)
         pthread_mutex_unlock(&threadpool->mtx_);
 
         // 任务队列为空且停止所有线程， 则退出当前线程
-        if ( task.fnTask_ == NULL && threadpool->stopall_ != 0)
+        if ( task.fnTask_ == NULL)
             break;
     
         // 通知threadpool_free, 任务出队了
