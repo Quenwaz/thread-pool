@@ -26,14 +26,14 @@ struct ThreadPool::Impl
     /// 停止任务标志
     bool stop_all_{false};
 
-    /// 条件变量， 通知任务入队 
-    std::condition_variable cv_;
+    /// 线程列表
+    std::vector<std::thread> threads_;
 
     /// 任务队列资源锁
     std::mutex mtx_;
 
-    /// 线程列表
-    std::vector<std::thread> threads_;
+    /// 条件变量， 通知任务入队 
+    std::condition_variable cv_;
 
     /// 任务队列
     std::queue<Task> task_queue_;

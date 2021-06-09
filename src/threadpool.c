@@ -37,11 +37,11 @@ struct ThreadPool{
     /// 停止工作标志
     uint8_t stopall_;
 
-    // 工作线程id列表
-    pthread_t * tpool_;
-
     // 工作线程个数
     uint32_t tpool_szie_;
+
+    // 工作线程id列表
+    pthread_t * tpool_;
 
     // 任务队列
     struct Queue* taskqueue_;
