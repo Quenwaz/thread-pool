@@ -1,6 +1,6 @@
 /**
  * @file threadpool.hpp
- * @author your name (you@domain.com)
+ * @author Quenwaz (404937333@qq.com)
  * @brief 线程池接口声明Cpp版本
  * @version 0.1
  * @date 2021-06-06

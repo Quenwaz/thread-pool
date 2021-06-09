@@ -1,6 +1,6 @@
 /**
  * @file threadpool.h
- * @author your name (you@domain.com)
+ * @author Quenwaz (404937333@qq.com)
  * @brief C语言版线程池接口声明
  * @version 0.1
  * @date 2021-06-06
