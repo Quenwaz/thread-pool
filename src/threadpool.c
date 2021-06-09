@@ -167,4 +167,6 @@ void threadpool_free(void* threadpool_, bool wait)
     queue_free(&threadpool->taskqueue_);
     pthread_mutex_destroy(&threadpool->mtx_);
     pthread_cond_destroy(&threadpool->cond_);
+
+    free(threadpool);
 }
